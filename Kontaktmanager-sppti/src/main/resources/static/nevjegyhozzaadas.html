@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Új névjegy hozzáadása</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="bg-primary text-white d-flex justify-content-between align-items-center p-2">
+    <img src="images/the_logo_1.jpg" alt="Logo" style="width: 100px; height: 100px;">
+    <h1 class="m-0 text-center flex-grow-1" style="font-size: 2rem; text-transform: uppercase;">ÚJ NÉVJEGY HOZZÁADÁS</h1>
+    <button class="btn btn-light" onclick="logout()">Kilépés</button>
+</div>
+
+    <div class="container mt-5">
+    <!--  <h2 class="text-center mb-4">Új névjegy hozzáadása</h2> -->
+    <form id="add-nevjegy-form">
+        <div class="mb-3">
+    	<label for="megszolitas" class="form-label">Megszólítás</label>
+   	 <input type="text" class="form-control" id="megszolitas">
+	</div>
+	<div class="mb-3">
+    	<label for="titulus" class="form-label">Titulus</label>
+    	<input type="text" class="form-control" id="titulus">
+	</div>
+	<div class="mb-3">
+    	<label for="vezeteknev" class="form-label">Vezetéknév</label>
+    	<input type="text" class="form-control" id="vezeteknev" required>
+	</div>
+	<div class="mb-3">
+    	<label for="keresztnev" class="form-label">Keresztnév</label>
+    	<input type="text" class="form-control" id="keresztnev" required>
+	</div>
+	<div class="mb-3">
+    	<label for="utonev" class="form-label">Utónév</label>
+    	<input type="text" class="form-control" id="utonev">
+	</div>
+        <div class="mb-3">
+            <label for="telefonszam" class="form-label">Telefonszám</label>
+            <input type="text" class="form-control" id="telefonszam" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="email" required>
+        </div>
+        <div class="mb-3">
+    	<label for="iranyitoszam" class="form-label">Irányítószám</label>
+    	<input type="text" class="form-control" id="iranyitoszam">
+	</div>
+	<div class="mb-3">
+    	<label for="telepules" class="form-label">Település</label>
+    	<input type="text" class="form-control" id="telepules">
+	</div>
+	<div class="mb-3">
+    	<label for="utca" class="form-label">Utca</label>
+    	<input type="text" class="form-control" id="utca">
+	</div>
+	<div class="mb-3">
+    	<label for="hazszam" class="form-label">Házszám</label>
+    	<input type="text" class="form-control" id="hazszam">
+	</div>
+	<div class="mb-3">
+    	<label for="emeletAjto" class="form-label">Emelet/Ajtó</label>
+    	<input type="text" class="form-control" id="emeletAjto">
+	</div>
+        	<div class="text-center">
+    	<button type="submit" class="btn btn-primary">Rögzítem</button>
+	</div>
+        	<!-- Három üres sor -->
+	<div class="mt-5"></div>
+     
+    </form>
+</div>
+
+    <script>
+        // Névjegy hozzáadása (megegyezik a korábban implementálttal)
+    document.getElementById('add-nevjegy-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Mezők értékeinek begyűjtése
+    const megszolitas = document.getElementById('megszolitas').value;
+    const titulus = document.getElementById('titulus').value;
+    const vezeteknev = document.getElementById('vezeteknev').value;
+    const keresztnev = document.getElementById('keresztnev').value;
+    const utonev = document.getElementById('utonev').value;
+    const telefonszam = document.getElementById('telefonszam').value;
+    const email = document.getElementById('email').value;
+    const iranyitoszam = document.getElementById('iranyitoszam').value;
+    const telepules = document.getElementById('telepules').value;
+    const utca = document.getElementById('utca').value;
+    const hazszam = document.getElementById('hazszam').value;
+    const emeletAjto = document.getElementById('emeletAjto').value;
+
+    // Névjegy objektum létrehozása
+    const nevjegy = {
+        megszolitas,
+        titulus,
+        vezeteknev,
+        keresztnev,
+        utonev,
+        telefonszam,
+        email,
+        iranyitoszam,
+        telepules,
+        utca,
+        hazszam,
+        emeletAjto
+    };
+
+    // Fetch API használata POST kéréshez
+    fetch('/nevjegyek', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(nevjegy)
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Névjegy sikeresen hozzáadva!');
+            window.location.href = 'nevjegyek.html';
+        } else {
+            alert('Hiba történt a névjegy hozzáadásakor.');
+        }
+    })
+    .catch(error => console.error('Hiba a névjegy hozzáadásakor:', error));
+});
+
+
+    </script>
+</body>
+<footer style="
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 50%;
+    margin: 0 auto;
+    position: relative;
+    bottom: 0;">
+    <div>
+        <p style="margin: 0;">THE névjegykezelő - webes applikáció - Spring Boot v3.3.5</p>
+        <p style="margin: 0;">Made by: Bártfai Attila - JB3BMA - @2024</p>
+    </div>
+</footer>
+</html>

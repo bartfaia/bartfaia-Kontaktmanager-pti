@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE Névjegykezelő bejelentkezés</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">THE Névjegykezelő</h2>
+        <h2 class="text-center mb-4">Bejelentkezés</h2>
+        <div class="text-center mb-4">
+            <img src="images/the_logo_1.jpg" alt="Logo" style="width: 180px; height: 180px; display: block; margin: 0 auto;">
+        </div>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">Felhasználónév</label>
+                <input type="text" class="form-control" id="username" placeholder="Felhasználónév" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Jelszó (minimum 8 karakter)</label>
+                <input type="password" class="form-control" id="password" placeholder="Jelszó" minlength="8" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-3">Bejelentkezés</button>
+        </form>
+          
+	<div class="mt-5"></div>
+        <div id="error-msg" class="text-danger text-center mt-3" style="display: none;">
+            Sajnos a felhasználónév vagy a jelszó hibás!
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Felhasználók betöltése a JSON fájlból
+            fetch('felhasznalok.json')
+                .then(response => response.json())
+                .then(users => {
+                    const user = users.find(u => u.username === username && u.password === password);
+                    if (user) {
+                        // Sikeres bejelentkezés, átirányítás a főoldalra
+                        window.location.href = 'nevjegyek.html';
+                    } else {
+                        // Hibás bejelentkezés
+                        document.getElementById('error-msg').style.display = 'block';
+                    }
+                })
+                .catch(error => console.error('Hiba a JSON betöltésekor:', error));
+        });
+    </script>
+</body>
+<footer style="
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 50%;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);">
+    <div>
+        <p style="margin: 0;">THE névjegykezelő - webes applikáció - Spring Boot v3.3.5</p>
+        <p style="margin: 0;">Made by: Bártfai Attila - JB3BMA - @2024</p>
+    </div>
+</footer>
+
+
+
+</html>
